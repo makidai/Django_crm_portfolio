@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{%  extends 'accounts/main.html' %}
+
+{% block content %}
+
+{% include 'accounts/status.html' %}
+
+<br>
+
+<div class="row">
+	<div class="col-md-5">
+		<h5>お客様情報  現在<strong>{{total_customers}}</strong>名</h5>
+		<hr>
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th></th>
+					<th>名前</th>
+					<th>携帯番号</th>
+				</tr>
+
+				{% for customer in customers %}
+				<tr>
+					<td><a class="btn btn-sm btn-success" href="{% url 'customer' customer.id %}">詳細</a></td>
+					<td>{{customer.name}}</td>
+					<td>{{customer.phone}}</td>
+				</tr>
+
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+
+	<div class="col-md-7">
+		<h5>最近の注文情報</h5>
+		<hr>
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr>
+					<th>商品</th>
+					<th>注文日</th>
+					<th>配達状況</th>
+					<th>編集</th>
+					<th>削除</th>
+				</tr>
+
+				{% for order in orders %}
+				<tr>	
+					<td>{{order.product}}</td>
+					<td>{{order.date_created}}</td>
+					<td>{{order.get_status_display}}</td>
+					<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">編集</a></td>
+					<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">削除</a></td>
+					
+				</tr>
+
+				{% endfor %}
+
+				
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+{% endblock %}
